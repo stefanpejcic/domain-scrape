@@ -10,7 +10,7 @@ def main():
   (options, args) = parser.parse_args()
 
   if len(args) < 2:
-    print "Incorrect arguments"
+    print ("Incorrect arguments")
     parser.print_help()
     exit(1)
 
@@ -25,13 +25,13 @@ def main():
     os.makedirs(directory)
 
   if not domain in queue[0]:
-    print "Provided domain not found in start URL"
+    print ("Provided domain not found in start URL")
     parser.print_help()
     exit(1)
 
-  print "saving in {}".format(directory)
-  print "using domain {}".format(domain)
-  print "start URL {}".format(queue[0])
+  print ("saving in {}".format(directory))
+  print ("using domain {}".format(domain))
+  print ("start URL {}".format(queue[0]))
 
   while len(queue) > 0:
     url = queue.pop()
@@ -45,7 +45,7 @@ def main():
       processed.append(url)
       continue
 
-    print "scraping {}".format(url)
+    print ("scraping {}".format(url))
     (urls, data, is_html) = scrape_next(url, first)
 
     if data is None:
@@ -60,7 +60,7 @@ def main():
     processed.append(url)
     count += 1
 
-  print "done -- processed {} urls".format(count)
+  print ("done -- processed {} urls".format(count))
   exit(0)
 
 def is_relative_url(url):
@@ -90,13 +90,13 @@ def scrape_next(url, url_base):
   try:
     response = urllib2.urlopen(url)
   except urllib2.HTTPError as e:
-    print "http error {} reading {}: {}".format(e.code, url, e.reason)
+    print ("http error {} reading {}: {}".format(e.code, url, e.reason))
     return (None, None, None)
   except urllib2.URLError as e:
-    print "bad url {}: {}".format(url, e.reason)
+    print ("bad url {}: {}".format(url, e.reason))
     return (None, None, None)
   except:
-    print "unexpected error reading {}".format(url)
+    print ("unexpected error reading {}".format(url))
     return (None, None, None)
 
   data = response.read()
